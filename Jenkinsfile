@@ -2,34 +2,40 @@ pipeline {
 
     agent any
 
+    environment {
+        STUDENT = "Rahul"
+        COURSE = "DevOps"
+        COMPANY = "OpenAI Training Lab"
+        VERSION = "1.0"
+    }
+
     stages {
 
-        stage('Jenkins Information') {
+        stage('Built-in Variables') {
             steps {
-
-                echo "Job Name : ${env.JOB_NAME}"
-
-                echo "Build Number : ${env.BUILD_NUMBER}"
-
-                echo "Workspace : ${env.WORKSPACE}"
-
-                echo "Jenkins URL : ${env.JENKINS_URL}"
-
+                echo "Job Name      : ${env.JOB_NAME}"
+                echo "Build Number  : ${env.BUILD_NUMBER}"
+                echo "Workspace     : ${env.WORKSPACE}"
             }
         }
 
-        stage('Shell Variables') {
+        stage('Custom Variables') {
             steps {
+                echo "Student : ${STUDENT}"
+                echo "Course  : ${COURSE}"
+                echo "Version : ${VERSION}"
+            }
+        }
 
+        stage('Shell Access') {
+            steps {
                 sh '''
-                echo "Job Name = $JOB_NAME"
-                echo "Build Number = $BUILD_NUMBER"
-                echo "Workspace = $WORKSPACE"
+                echo "Student = $STUDENT"
+                echo "Course = $COURSE"
+                echo "Version = $VERSION"
                 '''
-
             }
         }
 
     }
-
 }
