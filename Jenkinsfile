@@ -1,25 +1,35 @@
 pipeline {
+
     agent any
 
     stages {
 
-        stage('Welcome') {
+        stage('Jenkins Information') {
             steps {
-                echo 'Hello Rahul!'
+
+                echo "Job Name : ${env.JOB_NAME}"
+
+                echo "Build Number : ${env.BUILD_NUMBER}"
+
+                echo "Workspace : ${env.WORKSPACE}"
+
+                echo "Jenkins URL : ${env.JENKINS_URL}"
+
             }
         }
 
-        stage('Current Directory') {
+        stage('Shell Variables') {
             steps {
-                sh 'pwd'
-            }
-        }
 
-        stage('List Files') {
-            steps {
-                sh 'ls -la'
+                sh '''
+                echo "Job Name = $JOB_NAME"
+                echo "Build Number = $BUILD_NUMBER"
+                echo "Workspace = $WORKSPACE"
+                '''
+
             }
         }
 
     }
+
 }
