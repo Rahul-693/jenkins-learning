@@ -4,34 +4,21 @@ pipeline {
 
     stages {
 
-        stage('Shell Script Demo') {
+        stage('Pipeline Failure Demo') {
 
             steps {
 
                 sh '''
 
-                echo "===== User ====="
-                whoami
+                echo "Step 1"
 
-                echo
-
-                echo "===== Directory ====="
                 pwd
 
-                echo
+                echo "Step 2"
 
-                echo "===== Files ====="
-                ls -la
+                ls does_not_exist
 
-                echo
-
-                echo "===== Date ====="
-                date
-
-                echo
-
-                echo "===== Java ====="
-                java --version
+                echo "Step 3"
 
                 '''
 
