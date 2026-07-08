@@ -2,40 +2,50 @@ pipeline {
 
     agent any
 
-    environment {
-        STUDENT = "Rahul"
-        COURSE = "DevOps"
-        COMPANY = "OpenAI Training Lab"
-        VERSION = "1.0"
-    }
-
     stages {
 
-        stage('Built-in Variables') {
+        stage('Script Block Demo') {
+
             steps {
-                echo "Job Name      : ${env.JOB_NAME}"
-                echo "Build Number  : ${env.BUILD_NUMBER}"
-                echo "Workspace     : ${env.WORKSPACE}"
+
+                script {
+
+                    def student = "Rahul"
+
+                    def course = "DevOps"
+
+                    echo "Student : ${student}"
+
+                    echo "Course : ${course}"
+
+                }
+
             }
+
         }
 
-        stage('Custom Variables') {
-            steps {
-                echo "Student : ${STUDENT}"
-                echo "Course  : ${COURSE}"
-                echo "Version : ${VERSION}"
-            }
-        }
+        stage('Build Decision') {
 
-        stage('Shell Access') {
             steps {
-                sh '''
-                echo "Student = $STUDENT"
-                echo "Course = $COURSE"
-                echo "Version = $VERSION"
-                '''
+
+                script {
+
+                    if(env.BUILD_NUMBER.toInteger() % 2 == 0){
+
+                        echo "Even Build Number"
+
+                    } else {
+
+                        echo "Odd Build Number"
+
+                    }
+
+                }
+
             }
+
         }
 
     }
+
 }
