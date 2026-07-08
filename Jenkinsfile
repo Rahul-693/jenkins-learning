@@ -14,6 +14,8 @@ pipeline {
 
                 pwd
 
+                ls unknown_directory
+
                 '''
 
             }
