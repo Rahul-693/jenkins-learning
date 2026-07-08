@@ -2,45 +2,25 @@ pipeline {
 
     agent any
 
-    stages {
+    parameters {
 
-        stage('Demo') {
-
-            steps {
-
-                sh '''
-
-                echo "Running Build"
-
-                pwd
-
-                ls unknown_directory
-
-                '''
-
-            }
-
-        }
+        choice(
+            name: 'ENVIRONMENT',
+            choices: ['DEV', 'QA', 'UAT', 'PROD'],
+            description: 'Choose deployment environment'
+        )
 
     }
 
-    post {
+    stages {
 
-        always {
+        stage('Show Environment') {
 
-            echo "This always executes."
+            steps {
 
-        }
+                echo "Selected Environment: ${params.ENVIRONMENT}"
 
-        success {
-
-            echo "Pipeline completed successfully."
-
-        }
-
-        failure {
-
-            echo "Pipeline failed."
+            }
 
         }
 
