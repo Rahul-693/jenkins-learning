@@ -4,43 +4,36 @@ pipeline {
 
     stages {
 
-        stage('Script Block Demo') {
+        stage('Shell Script Demo') {
 
             steps {
 
-                script {
+                sh '''
 
-                    def student = "Rahul"
+                echo "===== User ====="
+                whoami
 
-                    def course = "DevOps"
+                echo
 
-                    echo "Student : ${student}"
+                echo "===== Directory ====="
+                pwd
 
-                    echo "Course : ${course}"
+                echo
 
-                }
+                echo "===== Files ====="
+                ls -la
 
-            }
+                echo
 
-        }
+                echo "===== Date ====="
+                date
 
-        stage('Build Decision') {
+                echo
 
-            steps {
+                echo "===== Java ====="
+                java --version
 
-                script {
-
-                    if(env.BUILD_NUMBER.toInteger() % 2 == 0){
-
-                        echo "Even Build Number"
-
-                    } else {
-
-                        echo "Odd Build Number"
-
-                    }
-
-                }
+                '''
 
             }
 
