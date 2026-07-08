@@ -4,25 +4,41 @@ pipeline {
 
     stages {
 
-        stage('Pipeline Failure Demo') {
+        stage('Demo') {
 
             steps {
 
                 sh '''
 
-                echo "Step 1"
+                echo "Running Build"
 
                 pwd
-
-                echo "Step 2"
-
-                ls does_not_exist
-
-                echo "Step 3"
 
                 '''
 
             }
+
+        }
+
+    }
+
+    post {
+
+        always {
+
+            echo "This always executes."
+
+        }
+
+        success {
+
+            echo "Pipeline completed successfully."
+
+        }
+
+        failure {
+
+            echo "Pipeline failed."
 
         }
 
