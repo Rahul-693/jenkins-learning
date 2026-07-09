@@ -48,7 +48,7 @@ pipeline {
         success {
             echo "Docker image built successfully."
         }
- 
+    
         failure {
             echo "Docker build failed."
         }
