@@ -41,7 +41,7 @@ pipeline {
             }
         }
     }
-
+ 
     post {
         success {
             echo "Docker image built successfully."
