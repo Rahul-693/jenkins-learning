@@ -22,24 +22,22 @@ pipeline {
             }
         }
 
-        stage('Push Docker Image') {
+        stage('Push Docker Image to ECR') {
             steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-creds',
-                    usernameVariable: 'DOCKER_USER',
-                    passwordVariable: 'DOCKER_PASS'
-                )]) {
+                sh '''
+                    aws ecr get-login-password --region ap-south-2 \
+                    | docker login \
+                    --username AWS \
+                    --password-stdin 568256616486.dkr.ecr.ap-south-2.amazonaws.com
 
-                    sh '''
-                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                    docker tag jenkins-learning:${BUILD_NUMBER} \
+                    568256616486.dkr.ecr.ap-south-2.amazonaws.com/jenkins-learning:${BUILD_NUMBER}
 
-                        docker tag jenkins-learning:${BUILD_NUMBER} $DOCKER_USER/jenkins-learning:${BUILD_NUMBER}
+                    docker push \
+                    568256616486.dkr.ecr.ap-south-2.amazonaws.com/jenkins-learning:${BUILD_NUMBER}
 
-                        docker push $DOCKER_USER/jenkins-learning:${BUILD_NUMBER}
-
-                        docker logout
-                    '''
-                }
+                    docker logout 568256616486.dkr.ecr.ap-south-2.amazonaws.com
+                '''
             }
         }
     }
