@@ -72,10 +72,9 @@ pipeline {
 		stage('Update Image') {
             steps {
                 sh '''
-                jq --arg IMAGE "568256616486.dkr.ecr.ap-south-2.amazonaws.com/jenkins-learning:${BUILD_NUMBER}" \
-                '.containerDefinitions[0].image=$IMAGE' \
-                new-task-definition.json \
-                > final-task-definition.json
+				jq --arg IMAGE "568256616486.dkr.ecr.ap-south-2.amazonaws.com/jenkins-learning:$BUILD_NUMBER" \
+                '(.containerDefinitions[] | select(.name=="jenkins-container")).image = $IMAGE' \
+                new-task-definition.json > final-task-definition.json
                 '''
             }
         }
@@ -112,5 +111,14 @@ pipeline {
         failure {
             echo "Deployment failed."
         }
+
+		always {
+			echo "Cleaning Docker ..."
+
+			sh '''
+			    docker image prune -af
+				docker builder prune -af
+			'''
+		}
     }
 }
