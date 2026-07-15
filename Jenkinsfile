@@ -98,6 +98,11 @@ pipeline {
                   --task-definition jenkins-learning-task \
                   --force-new-deployment \
                   --region ap-south-2
+
+			    aws ecs wait services-stable \
+                  --cluster jenkins-learning-cluster \
+                  --services jenkins-learning-service \
+                  --region ap-south-2 
                 '''
             }
         }
